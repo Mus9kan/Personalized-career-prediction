@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PathAligner Profile</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6c63ff, #c5cae9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-y: auto;
+    }
+
+    .container {
+      background-color: white;
+      width: 90%;
+      max-width: 800px;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      margin: 30px 0;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header h2 {
+      color: #5f57f8;
+      margin: 0;
+    }
+
+    .logout-btn {
+      background: #6c63ff;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .profile-image {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background-image: url('https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 10px;
+    }
+
+    .edit-btn {
+      display: block;
+      margin: 0 auto 15px;
+      background-color: #6c63ff;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background-color: #594bd1;
+    }
+
+    .username {
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 25px;
+    }
+
+    form label {
+      display: block;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    form input, form select, form textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .conditional-section {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .save-btn {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #6c63ff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .save-btn:hover {
+      background-color: #594bd1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>PathAligner Profile</h2>
+      <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <div class="profile-image"></div>
+    <button class="edit-btn" onclick="enableEdit()">Edit Profile</button>
+    <div class="username">Welcome, <span>{{ username }}</span></div>
+
+    <form method="POST" action="/save-profile">
+      <label for="full_name">Full Name:</label>
+      <input type="text" name="full_name" placeholder="Enter your full name" required />
+
+      <label for="user_type">You are a:</label>
+      <select name="user_type" id="userType" onchange="toggleSections()" required>
+        <option value="">-- Select --</option>
+        <option value="School Student">School Student</option>
+        <option value="College Student">College Student</option>
+        <option value="Employee">Employee</option>
+        <option value="Unemployed">Unemployed</option>
+      </select>
+
+      <div id="schoolSection" class="conditional-section">
+        <label>Class & Board:</label>
+        <input type="text" name="school_details" placeholder="e.g., Class 10, CBSE"/>
+      </div>
+
+      <div id="collegeSection" class="conditional-section">
+        <label>Degree & University:</label>
+        <input type="text" name="college_details" placeholder="e.g., B.Tech, XYZ University"/>
+      </div>
+
+      <div id="employeeSection" class="conditional-section">
+        <label>Company & Role:</label>
+        <input type="text" name="company_role" placeholder="e.g., Developer, ABC Corp"/>
+      </div>
+
+      <label for="education">Education Background:</label>
+      <textarea name="education" rows="3" placeholder="Courses, degrees, achievements..."></textarea>
+
+      <label for="experience">Professional Experience:</label>
+      <textarea name="experience" rows="3" placeholder="Work history, internships, projects..."></textarea>
+
+      <label for="skills">Skills / Certifications:</label>
+      <textarea name="skills" rows="3" placeholder="Python, Canva, Web Dev, etc."></textarea>
+
+      <button type="submit" class="save-btn">Save Profile</button>
+    </form>
+  </div>
+
+  <script>
+    function toggleSections() {
+      const type = document.getElementById("userType").value;
+      document.getElementById("schoolSection").style.display = (type === "School Student") ? "block" : "none";
+      document.getElementById("collegeSection").style.display = (type === "College Student") ? "block" : "none";
+      document.getElementById("employeeSection").style.display = (type === "Employee") ? "block" : "none";
+    }
+
+    function enableEdit() {
+      document.querySelectorAll('input, textarea, select').forEach(el => el.disabled = false);
+    }
+
+    // Optional: auto-disable form fields on load
+    window.onload = () => {
+      document.querySelectorAll('input, textarea, select').forEach(el => el.disabled = true);
+    };
+  </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🧠 Your Prediction History</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7ff;
+      margin: 0;
+      padding: 40px;
+    }
+
+    h2 {
+      color: #5f57f8;
+      text-align: center;
+    }
+
+    .history-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .history-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 15px;
+    }
+
+    .history-item:last-child {
+      border-bottom: none;
+    }
+
+    .career {
+      font-weight: bold;
+      color: #333;
+      font-size: 18px;
+    }
+
+    .scores {
+      color: #555;
+      margin-top: 5px;
+    }
+
+    .timestamp {
+      font-size: 13px;
+      color: #999;
+      margin-top: 5px;
+    }
+
+    .no-history {
+      text-align: center;
+      color: #888;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🧠 Your Prediction History</h2>
+  <div class="history-container">
+    {% if history and history|length > 0 %}
+      {% for pred in history %}
+        <div class="history-item">
+          <div class="career">Suggested Career: {{ pred[0] }}</div>
+          <div class="scores">
+            <strong>Category Scores:</strong><br>
+            {% for key, value in pred[1].items() %}
+              - {{ key.capitalize() }}: {{ value }}<br>
+            {% endfor %}
+          </div>
+          <div class="timestamp">Predicted on: {{ pred[2] }}</div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="no-history">No prediction history available yet.</div>
+    {% endif %}
+  </div>
+
+</body>
+</html>
