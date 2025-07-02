@@ -5,12 +5,23 @@ import openai
 import requests
 import traceback
 import json
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+# Get the API key from the environment
+api_key = os.getenv("OPENAI_API_KEY")
+
+# Initialize OpenAI client with the key
+client = openai.OpenAI(api_key=api_key)
 
 app = Flask(__name__)
 app.secret_key = 'Harshi@9424'
 
 # ---------------- OpenAI API Key ----------------
-openai.api_key = "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"
+openai.api_key = api_key
 
 # ---------------- Database Connection ----------------
 def get_db_connection():
